@@ -215,6 +215,7 @@ include('includes/navbar.php');
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Password</th>
       <th scope="col">Mobile Number</th>
       <th scope="col">Address</th>
       <th scope="col">Action</th>
@@ -226,6 +227,7 @@ include('includes/navbar.php');
       <td>Al Franz</td>
       <td>Franco</td>
       <td>madada234@gmail.com</td>
+      <td>123456789</td>
       <td>09123123111</td>
       <td>Ampayon, Butuan City</td>
       <td><a class="btn btn-primary" href="#" role="button">Edit</a>
@@ -236,6 +238,7 @@ include('includes/navbar.php');
       <td>John Mark</td>
       <td>Cabantac</td>
       <td>cabantacjohnmark@gmail.com</td>
+      <td>123456789</td>
       <td>09123123111</td>
       <td>Barangay Tandang Sora, Butuan City</td>
       <td><a class="btn btn-primary" href="#" role="button">Edit</a>
@@ -246,6 +249,7 @@ include('includes/navbar.php');
       <td>Christian Roi</td>
       <td>Maluya</td>
       <td>pockiemaster@gmail.com</td>
+      <td>123456789</td>
       <td>09123123111</td>
       <td>Ampayon, Che Lumber Supply, Butuan City</td>
       <td><a class="btn btn-primary" href="#" role="button">Edit</a>

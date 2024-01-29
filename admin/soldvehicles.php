@@ -205,15 +205,21 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">All Vehicles</h1>
+                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
                 <br>
+
+                <nav class="navbar navbar-light bg-light">
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav>
                 
                
 
 
             <div>
             
-            <button type="button" class="btn btn-success">Add New Vehicle</button>
             <br>
             <br>
                 <table class="table">
@@ -230,7 +236,7 @@ include('includes/navbar.php');
   </thead>
   <tbody class="table-group-divider">
     <tr>
-      <td>John Lawrence Cambalon</td>
+      <td>Name: John Lawrence Cambalon<br>Email: lawrencecambalon@gmail.com<br> Address: Pagatpatan, Butuan City</td>
       <th>Suzuki</th>
       <td>Ertiga</td>
       <td>1M8GDM9A_KP042788</td>
