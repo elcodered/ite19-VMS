@@ -69,7 +69,7 @@
         data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="allvehicles.php">All Vehicles</a>
-            <a class="collapse-item" href="#">Sold Vehicles</a>
+            <a class="collapse-item" href="soldvehicles.php">Sold Vehicles</a>
         </div>
     </div>
 </li>
