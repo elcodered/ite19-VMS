@@ -219,56 +219,51 @@ include('includes/navbar.php');
                 <table class="table">
   <thead class="table-dark">
     <tr>
-    <th scope="col">Manufacturer Name</th>
-      <th scope="col">Model Name</th>
-      <th scope="col">Category</th>
-      <th scope="col">Cost Price</th>
-      <th scope="col">Status</th>
-      <th scope="col">Added on</th>
-      <th scope="col">Sold on</th>
+    <th scope="col">Customer Details</th>
+    <th scope="col">Manufacturer</th>
+      <th scope="col">Model</th>
+      <th scope="col">VIN</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date of Sale</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>John Lawrence Cambalon</td>
+      <th>Suzuki</th>
+      <td>Ertiga</td>
+      <td>1M8GDM9A_KP042788</td>
       <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
+      <td>01/27/24</td>
+      <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>John Lawrence Cambalon</td>
+      <th>Suzuki</th>
+      <td>Ertiga</td>
+      <td>1M8GDM9A_KP042788</td>
       <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
+      <td>01/27/24</td>
+      <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>John Lawrence Cambalon</td>
+      <th>Suzuki</th>
+      <td>Ertiga</td>
+      <td>1M8GDM9A_KP042788</td>
       <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
+      <td>01/27/24</td>
+      <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>John Lawrence Cambalon</td>
+      <th>Suzuki</th>
+      <td>Ertiga</td>
+      <td>1M8GDM9A_KP042788</td>
       <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
+      <td>01/27/24</td>
+      <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
   </tbody>
 </table>
