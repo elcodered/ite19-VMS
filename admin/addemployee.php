@@ -1,4 +1,5 @@
 <?php 
+    session_start();
 include('includes/header.php'); 
 include('includes/navbar.php');
 
@@ -208,6 +209,20 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                <?php
+                if (isset($_SESSION['status'])) {
+
+                    ?>
+
+                    <div class="alert alert-success" role="alert">
+                      <h4 class="alert-heading"><?php echo $_SESSION['status']; ?></h4>
+                    </div>
+                    <?php
+                    
+                    unset($_SESSION['status']);
+                }
+                ?>
+
                 <h1 class="h3 mb-0 text-gray-800">Add Employees</h1>
                 <br>
 
@@ -251,7 +266,8 @@ include('includes/navbar.php');
 
   
 
-    <?php include('includes/scripts.php');
+    <?php
+    include('includes/scripts.php');
     include('includes/footer.php'); ?>
 
 

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include("db_conn.php");
 
 
@@ -18,7 +20,8 @@ if(isset($_POST["submit"])){
         $result = mysqli_query($conn, $sql);
 
         if($result) {
-            header("Location: addemployee.php?msg=New record created successfully");
+            $_SESSION['status'] = "Data Inserted Successfully!";
+            header("Location: addemployee.php");
         }
         else{
             echo "Failed: " . mysqli_error($conn);

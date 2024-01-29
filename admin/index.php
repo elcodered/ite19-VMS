@@ -302,10 +302,11 @@ include('includes/navbar.php');
     </div>
     <!-- End of Page Wrapper -->
 
-  
-
     <?php include('includes/scripts.php');
-    include('includes/footer.php'); ?>
+    include('includes/footer.php'); 
+
+    ?>
+
 
 
 
