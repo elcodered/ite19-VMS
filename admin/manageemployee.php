@@ -221,40 +221,35 @@ include('includes/navbar.php');
       <th scope="col">Action</th>
     </tr>
   </thead>
-  <tbody class="table-group-divider">
-    <tr>
-      <th scope="row">1</th>
-      <td>Al Franz</td>
-      <td>Franco</td>
-      <td>madada234@gmail.com</td>
-      <td>123456789</td>
-      <td>09123123111</td>
-      <td>Ampayon, Butuan City</td>
-      <td><a class="btn btn-primary" href="#" role="button">Edit</a>
-<button class="btn btn-danger" type="submit">Delete</button></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>John Mark</td>
-      <td>Cabantac</td>
-      <td>cabantacjohnmark@gmail.com</td>
-      <td>123456789</td>
-      <td>09123123111</td>
-      <td>Barangay Tandang Sora, Butuan City</td>
-      <td><a class="btn btn-primary" href="#" role="button">Edit</a>
-<button class="btn btn-danger" type="submit">Delete</button></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Christian Roi</td>
-      <td>Maluya</td>
-      <td>pockiemaster@gmail.com</td>
-      <td>123456789</td>
-      <td>09123123111</td>
-      <td>Ampayon, Che Lumber Supply, Butuan City</td>
-      <td><a class="btn btn-primary" href="#" role="button">Edit</a>
-<button class="btn btn-danger" type="submit">Delete</button></td>
-    </tr>
+    <?php
+
+    include('db_conn.php');
+
+$sql = "SELECT * FROM employee";
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Invalid query" . $conn->connect_error);
+}
+while ($row = $result->fetch_assoc()) {
+
+    echo "<tr>
+      <th scope=\"row\">" . $row["emp_id"] . "</th>
+      <td>" . $row["f_name"] . "</td>
+      <td>" . $row["l_name"] . "</td>
+      <td>" . $row["email"] . "</td>
+      <td>" . $row["password"] . "</td>
+      <td>" . $row["mobile"] . "</td>
+      <td>" . $row["address"] . "</td>
+      <td><a class=\"btn btn-primary\" href=\"#\" role=\"button\">Edit</a>
+      <button class=\"btn btn-danger\" type=\"submit\">Delete</button></td>
+    </tr>";
+}
+
+$conn->close();
+?>
+
+    
   </tbody>
 </table>
                 

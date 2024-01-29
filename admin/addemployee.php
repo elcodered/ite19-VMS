@@ -1,4 +1,5 @@
-<?php include('includes/header.php'); 
+<?php 
+include('includes/header.php'); 
 include('includes/navbar.php');
 
 
@@ -236,7 +237,7 @@ include('includes/navbar.php');
             <label for="exampleInputPassword1" class="form-label">Address</label>
             <input type="text" class="form-control" id="exampleInputPassword1" name="address">
                     </div>
-            <button button type="submit" class="btn btn-primary">Add Employee</button>
+            <button type="submit" class="btn btn-primary" name="submit">Add Employee</button>
                 </form>
                 
                 </div>
