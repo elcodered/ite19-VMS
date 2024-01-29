@@ -236,7 +236,7 @@ include('includes/navbar.php');
   </thead>
   <tbody class="table-group-divider">
     <tr>
-      <td>Name: John Lawrence Cambalon<br>Email: lawrencecambalon@gmail.com<br> Address: Pagatpatan, Butuan City</td>
+    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
       <th>Suzuki</th>
       <td>Ertiga</td>
       <td>1M8GDM9A_KP042788</td>
@@ -245,7 +245,7 @@ include('includes/navbar.php');
       <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>John Lawrence Cambalon</td>
+    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
       <th>Suzuki</th>
       <td>Ertiga</td>
       <td>1M8GDM9A_KP042788</td>
@@ -254,7 +254,7 @@ include('includes/navbar.php');
       <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>John Lawrence Cambalon</td>
+    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
       <th>Suzuki</th>
       <td>Ertiga</td>
       <td>1M8GDM9A_KP042788</td>
@@ -263,7 +263,7 @@ include('includes/navbar.php');
       <td><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
-      <td>John Lawrence Cambalon</td>
+    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
       <th>Suzuki</th>
       <td>Ertiga</td>
       <td>1M8GDM9A_KP042788</td>
