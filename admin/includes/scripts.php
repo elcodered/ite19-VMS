@@ -18,3 +18,32 @@
     <!--sweet alert js -->
 
     <script src="admin/js/sweetalert.min.js"></script>
+
+
+    <!--show log data from edit-->
+    <script>
+
+    $(document).ready(function(editbtn) {
+
+        $('.editbtn').on('click', function() {
+            $('#editmodal').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function(){
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#f_name').val(data[0]);
+            $('#l_name').val(data[1]);
+            $('#email').val(data[2]);
+            $('#password').val(data[3]);
+            $('#mobile').val(data[4]);
+            $('#address').val(data[5]);
+
+        });
+    } );
+
+    </script>

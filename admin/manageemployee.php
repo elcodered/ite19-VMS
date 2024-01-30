@@ -241,9 +241,12 @@ while ($row = $result->fetch_assoc()) {
       <td>" . $row["password"] . "</td>
       <td>" . $row["mobile"] . "</td>
       <td>" . $row["address"] . "</td>
-      <td><a class=\"btn btn-primary\" href=\"#\" role=\"button\">Edit</a>
-      <button class=\"btn btn-danger\" type=\"submit\">Delete</button></td>
+      <td>
+        <a class=\"btn btn-primary editbtn\" data-toggle=\"modal\" data-target=\"#editmodal\" href=\"#\" role=\"button\ name=\"updatedata\">Edit</a>
+        <button class=\"btn btn-danger\" type=\"submit\">Delete</button>
+      </td>
     </tr>";
+
 }
 
 $conn->close();
@@ -252,6 +255,59 @@ $conn->close();
     
   </tbody>
 </table>
+
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="updatecode.php" method="POST">
+      <div class="modal-body">
+
+        
+            <input type="hidden" name="emp_id" id="emp_id"></input>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">First Name</label>
+            <input type="text" class="form-control" name="f_name" id="f_name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Last Name</label>
+            <input type="text" class="form-control" name="l_name" id="l_name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Email</label>
+            <input type="text" class="form-control" name="email" id="email">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Password</label>
+            <input type="text" class="form-control" name="password" id="password">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Mobile Number</label>
+            <input type="text" class="form-control" name="mobile" id="mobile">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Address</label>
+            <input type="text" class="form-control" name="address" id="address">
+          </div>
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" name="submit">Update Data</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
                 
                 </div>
                 <!-- /.container-fluid -->
