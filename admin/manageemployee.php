@@ -1,7 +1,5 @@
 <?php include('includes/header.php'); 
 include('includes/navbar.php');
-
-
 ?>
 
         
@@ -221,36 +219,52 @@ include('includes/navbar.php');
       <th scope="col">Action</th>
     </tr>
   </thead>
-    <?php
 
-    include('db_conn.php');
+  <?php
+include('db_conn.php');
 
-$sql = "SELECT * FROM employee";
+if ($conn->connect_error){
+    die('Connection Failed'. $conn->connect_error);
+}
+
+$sql = 'SELECT * FROM employee';
 $result = $conn->query($sql);
-
 if (!$result) {
-    die("Invalid query" . $conn->connect_error);
+    die('invalid query: ' . $conn->error);
 }
+
 while ($row = $result->fetch_assoc()) {
-
-    echo "<tr>
-      <th scope=\"row\">" . $row["emp_id"] . "</th>
-      <td>" . $row["f_name"] . "</td>
-      <td>" . $row["l_name"] . "</td>
-      <td>" . $row["email"] . "</td>
-      <td>" . $row["password"] . "</td>
-      <td>" . $row["mobile"] . "</td>
-      <td>" . $row["address"] . "</td>
-      <td>
-        <a class=\"btn btn-primary editbtn\" data-toggle=\"modal\" data-target=\"#editmodal\" href=\"#\" role=\"button\ name=\"updatedata\">Edit</a>
-        <button class=\"btn btn-danger\" type=\"submit\">Delete</button>
-      </td>
-    </tr>";
-
+    echo "
+    <tr>
+        <th>{$row['emp_id']}</th>
+        <td>{$row['f_name']}</td>
+        <td>{$row['l_name']}</td>
+        <td>{$row['email']}</td>
+        <td>{$row['password']}</td>
+        <td>{$row['mobile']}</td>
+        <td>{$row['address']}</td>
+        <td>
+            <a class='btn btn-primary' data-toggle='modal' data-target='#editmodal' href='edit.php?id={$row['emp_id']}' name='updatedata'>Edit</a>
+            <a class='btn btn-danger' type='submit' href='delete.php?id={$row['emp_id']}'>Delete</a>
+        </td>
+    </tr>
+    ";
 }
-
-$conn->close();
 ?>
+
+        <tr>
+        <th>10</th>
+        <td>John</td>
+        <td>Cambalon</td>
+         <td>lawrencecambalon@gmail.com</td>
+         <td>123123123</td>
+         <td>09278363811</td>
+         <td>Villa Kananga</td>
+         <td>
+         <a class="btn btn-primary" data-toggle="modal" data-target="#editmodal" href="edit.php" name="updatedata">Edit</a>
+        <button class="btn btn-danger" type="submit" href="delete.php">Delete</button>
+    </td>
+</tr>
 
     
   </tbody>
@@ -266,11 +280,13 @@ $conn->close();
         </button>
       </div>
 
-      <form action="updatecode.php" method="POST">
+    
+
+      <form action="edit.php" method="POST">
       <div class="modal-body">
 
         
-            <input type="hidden" name="emp_id" id="emp_id"></input>
+            <input type="hidden" name="emp_id" id="emp_id" value="<?php echo $id;?>"></input>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">First Name</label>
             <input type="text" class="form-control" name="f_name" id="f_name">
