@@ -1,4 +1,7 @@
-<?php include('includes/header.php'); 
+<?php 
+
+session_start();
+include('includes/header.php'); 
 include('includes/navbar.php');
 ?>
 
@@ -206,121 +209,65 @@ include('includes/navbar.php');
                 <h1 class="h3 mb-0 text-gray-800">Manage Employees</h1>
                 <br>
 
+                <a class="btn btn-primary" href="../admin/create.php" role = "button">Add Employee</a>
+                <br>
+
                 <table class="table">
-  <thead class="table-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Password</th>
-      <th scope="col">Mobile Number</th>
-      <th scope="col">Address</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
+                    <thead>
+                        <tr>
 
-  <?php
-include('db_conn.php');
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Mobile</th>
+                            <th>Address</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "admin";
+                        $database = "vms";
 
-if ($conn->connect_error){
-    die('Connection Failed'. $conn->connect_error);
-}
+                        $connection = new mysqli($servername, $username, $password, $database);
 
-$sql = 'SELECT * FROM employee';
-$result = $conn->query($sql);
-if (!$result) {
-    die('invalid query: ' . $conn->error);
-}
+                        if ($connection->connect_error) {
+                            die("Connection Failed!". $connection->connect_error);
+                        }
 
-while ($row = $result->fetch_assoc()) {
-    echo "
-    <tr>
-        <th>{$row['emp_id']}</th>
-        <td>{$row['f_name']}</td>
-        <td>{$row['l_name']}</td>
-        <td>{$row['email']}</td>
-        <td>{$row['password']}</td>
-        <td>{$row['mobile']}</td>
-        <td>{$row['address']}</td>
-        <td>
-            <a class='btn btn-primary' data-toggle='modal' data-target='#editmodal' href='edit.php?id={$row['emp_id']}' name='updatedata'>Edit</a>
-            <a class='btn btn-danger' type='submit' href='delete.php?id={$row['emp_id']}'>Delete</a>
-        </td>
-    </tr>
-    ";
-}
-?>
+                        $sql = "SELECT * FROM employee";
+                        $result = $connection->query($sql);
 
-        <tr>
-        <th>10</th>
-        <td>John</td>
-        <td>Cambalon</td>
-         <td>lawrencecambalon@gmail.com</td>
-         <td>123123123</td>
-         <td>09278363811</td>
-         <td>Villa Kananga</td>
-         <td>
-         <a class="btn btn-primary" data-toggle="modal" data-target="#editmodal" href="edit.php" name="updatedata">Edit</a>
-        <button class="btn btn-danger" type="submit" href="delete.php">Delete</button>
-    </td>
-</tr>
+                        if(!$result){
+                            die("Invalid query". $connection->error);
+                        }
 
-    
-  </tbody>
-</table>
+                        while($row = $result->fetch_assoc()) {
+                            echo "
+                            <tr>
 
-<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+                            <td>$row[name]</td>
+                            <td>$row[email]</td>
+                            <td>$row[password]</td>
+                            <td>$row[mobile]</td>
+                            <td>$row[address]</td>
+                            <td>
+                                <a class='btn btn-primary btn-sm' href='../admin/edit.php?id=$row[id]'>Edit</a>
+                                <a class='btn btn-danger btn-sm' href='/admin/delete.php?id=$row[id]'>Delete</a>
+                            </td>
+                        </tr>
+                            ";
+                        }
 
-    
+ 
 
-      <form action="edit.php" method="POST">
-      <div class="modal-body">
+                        ?>
+                        
+                    </tbody>
 
-        
-            <input type="hidden" name="emp_id" id="emp_id" value="<?php echo $id;?>"></input>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">First Name</label>
-            <input type="text" class="form-control" name="f_name" id="f_name">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Last Name</label>
-            <input type="text" class="form-control" name="l_name" id="l_name">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Email</label>
-            <input type="text" class="form-control" name="email" id="email">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Password</label>
-            <input type="text" class="form-control" name="password" id="password">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Mobile Number</label>
-            <input type="text" class="form-control" name="mobile" id="mobile">
-          </div>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Address</label>
-            <input type="text" class="form-control" name="address" id="address">
-          </div>
-          
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success" name="submit">Update Data</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
+                </table>
 
 
 

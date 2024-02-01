@@ -200,20 +200,22 @@ include('includes/navbar.php');
 
                     </ul>
 
-                 </nav>
-                 <!-- End of Topbar -->
+                </nav>
+                <!-- End of Topbar -->
 
-                 <!-- Begin Page Content -->
-                  <?php
+                <!-- Begin Page Content -->
+                <?php
 
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "admin";
-                 $database = "vms";
+ob_start();
 
-                    $connection = new mysqli($servername, $username, $password, $database);
+                $servername = "localhost";
+                $username = "root";
+                $password = "admin";
+                $database = "vms";
 
-                 $id = "";
+                $connection = new mysqli($servername, $username, $password, $database);
+
+
                  $name = "";
                  $email = "";
                  $password = "";
@@ -223,77 +225,87 @@ include('includes/navbar.php');
                  $errorMessage = "";
                  $successMessage = "";
 
-                  if($_SERVER['REQUEST_METHOD'] == 'GET'){
+                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    $name = $_POST["name"];
+                    $email = $_POST["email"];
+                    $password = $_POST["password"];
+                    $mobile = $_POST["mobile"];
+                    $address = $_POST["address"];
 
-                
+                    do {
+                        if(empty($name) || empty($email) || empty($password) || empty($mobile) || empty($address)){
+                            $errorMessage = "All the fields are required";
+                            break;
+                    } 
 
-                     if(!isset($_GET['id'])){
-                        echo "<script> window.location.href='manageemployee.php';</script>";
-                      exit;
+                    $sql = "INSERT INTO employee (name, email, password, mobile, address)" . 
+                           "VALUES ('$name', '$email', '$password', '$mobile', '$address')";
+                           $result = $connection->query($sql);
 
-                 }
-                 $id = $_GET["id"];
-                    
-
-                    $sql = "SELECT * FROM employee WHERE id=$id";
-                    $result = $connection->query($sql);
-                    $row = $result->fetch_assoc();
-
-                 if (!$row){
-                     echo "<script> window.location.href='manageemployee.php';</script>";
-                     exit;
-                    }
-
-                    $name = $row["name"];
-                    $email = $row["email"];
-                    $password = $row["password"];
-                    $mobile = $row["mobile"];
-                    $address = $row["address"];
-
-                    }
-                    else {
-                        $id = $_POST['id'];
-
-                        $name = $_POST["name"];
-                        $email = $_POST["email"];
-                        $password = $_POST["password"];
-                        $mobile = $_POST["mobile"];
-                        $address = $_POST["address"];
-
-                    do{
-
-                    if(empty($id) || empty($name) || empty($email) || empty($password) || empty($mobile) || empty($address)){
-                        $errorMessage = "All the fields are required";
-                        break;
-                    }
-
-                    $sql = "UPDATE `employee` " .
-                            "SET `name` = '$name', `email` = '$email', `password` = '$password', `mobile` = '$mobile', `address` = '$address' " .
-                            "WHERE `id` = $id";
-
-                        $result = $connection->query($sql);
-
-                        if(!$result){
+                           if(!$result){
                             $errorMessage = "Invalid query: " . $connection->error;
                             break;
                            }
 
-                           $successMessage = "Employee updated successfully!";
+                    $name = "";
+                    $email = "";
+                    $password = "";
+                    $mobile = "";
+                    $address = "";
 
-                           echo "<script> window.location.href='manageemployee.php';</script>";
+                    $successMessage = "Created Employee Success!";
+                    echo "<script> window.location.href='manageemployee.php';</script>";
                     exit;
-
-
                     
-                    }while (false);
+                    
+                    
+                 }while (false);
 
                 }
+                    ob_end_flush();
+                 ?>
 
+                <div class="container-fluid">
+
+                <h1 class="h3 mb-0 text-gray-800">Create New Employee</h1>
+
+                <?php 
+                if (!empty($errorMessage)){
+                    echo "
+                    <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong>$errorMessage</strong>
+                    <button type='button' class='close' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    ";
+                }
+                ?>
+
+<?php 
+                    if (!empty($successMessage)){
+                        echo "
+                <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <strong>$successMessage</strong>
+                                <button type='button' class='close' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                             </div>
+                         </div>
+                    </div>
+                
+                    ";
+                    }
                     ?>
-                    <br>
+                <br>
 
                     <form method="POST">
-                        <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-6">
@@ -343,8 +355,7 @@ include('includes/navbar.php');
 
             
 
-            </div>
-        </div>
+    </div>
     <!-- End of Page Wrapper -->
 
   
