@@ -207,9 +207,7 @@ include('includes/navbar.php');
                 <div class="container-fluid">
 
                 <h1 class="h3 mb-0 text-gray-800">Manage Employees</h1>
-                <br>
-
-                <a class="btn btn-primary" href="../admin/create.php" role = "button">Add Employee</a>
+                
                 <br>
 
                 <table class="table">
