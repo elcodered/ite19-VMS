@@ -205,55 +205,73 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">Manage Models</h1>
-                <br>
+                <h1 class="h3 mb-0 text-gray-800">Manage Manufacturer and Models</h1>
                 
-               
+                <br>
 
-
-            <div>
-            
-            <button type="button" class="btn btn-success">Add Model</button>
-            <br>
-            <br>
                 <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Manufacturer Name</th>
-      <th scope="col">Model Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Audi</td>
-      <th>Q4 Sportback e-tron</th>
-      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Toyota</td>
-      <th>Rush</th>
-      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Mitsubishi</td>
-      <th>Adventure</th>
-      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+                    <thead>
+                        <tr>
 
-</div>
+                            <th>Manufacturer Name</th>
+                            <th>Model Name</th>
+                            <th>Description</th>
+                            <th>Color</th>
+                            <th>Engine/Transmission</th>
+                            <th>VIN</th>
+                            <th>Year Model</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $servername = "localhost";
+                        $username = "root";
+                        $password = "admin";
+                        $database = "vms";
+
+                        $connection = new mysqli($servername, $username, $password, $database);
+
+                        if ($connection->connect_error) {
+                            die("Connection Failed!". $connection->connect_error);
+                        }
+
+                        $sql = "SELECT * FROM models";
+                        $result = $connection->query($sql);
+
+                        if(!$result){
+                            die("Invalid query". $connection->error);
+                        }
+
+                        while($row = $result->fetch_assoc()) {
+                            echo "
+                            <tr>
+
+                            <td>$row[manufacturer]</td>
+                            <td>$row[model]</td>
+                            <td>$row[description]</td>
+                            <td>$row[color]</td>
+                            <td>$row[engine]</td>
+                            <td>$row[vin]</td>
+                            <td>$row[year_model]</td>
+                            <td>
+                                <a class='btn btn-primary btn-sm' href='../admin/editmodels.php?model_id=$row[model_id]'>Edit</a>
+                                <a class='btn btn-danger btn-sm' href='../admin/delete.php?model_id=$row[model_id]'>Delete</a>
+                            </td>
+                        </tr>
+                            ";
+                        }
+
+ 
+
+                        ?>
+                        
+                    </tbody>
+
+                </table>
+
+
+
                 
                 </div>
 

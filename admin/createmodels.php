@@ -1,7 +1,8 @@
-<?php include('includes/header.php'); 
+<?php 
+
+
+include('includes/header.php'); 
 include('includes/navbar.php');
-
-
 ?>
 
         
@@ -203,77 +204,171 @@ include('includes/navbar.php');
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
+                <?php
+
+ob_start();
+
+                $servername = "localhost";
+                $username = "root";
+                $password = "admin";
+                $database = "vms";
+
+                $connection = new mysqli($servername, $username, $password, $database);
+
+                
+                 $manufacturer = "";
+                 $model = "";
+                 $description = "";
+                 $color = "";
+                 $engine = "";
+                 $vin = "";
+                 $year_model = "";
+
+                 $errorMessage = "";
+                 $successMessage = "";
+
+                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                    $manufacturer = $_POST["manufacturer"];
+                    $model = $_POST["model"];
+                    $description = $_POST["description"];
+                    $color = $_POST["color"];
+                    $engine = $_POST["engine"];
+                    $vin = $_POST["vin"];
+                    $year_model = $_POST["year_model"];
+
+                    do {
+                        if(empty($manufacturer) || empty($model) || empty($color) || empty($engine) || empty($vin) || empty($description) || empty($year_model)){
+                            $errorMessage = "All Fields are required!";
+                            break;
+                    } 
+
+                    $sql = "INSERT INTO models (manufacturer, model, description, color, engine, vin, year_model)" . 
+                           "VALUES ('$manufacturer', '$model', '$description', '$color', '$engine', '$vin', '$year_model')";
+                           $result = $connection->query($sql);
+
+                           if(!$result){
+                            $errorMessage = "Invalid query: " . $connection->error;
+                            break;
+                           }
+                    
+                    $manufacturer = "";
+                    $model = "";
+                    $description = "";
+                    $color = "";
+                    $engine = "";
+                    $vin = "";
+                    $year_model = "";
+
+                    $successMessage = "Created Manufacturer and Models Success!";
+                    echo "<script> window.location.href='managemodels.php';</script>";
+                    exit;
+                    
+                    
+                    
+                 }while (false);
+
+                }
+                    ob_end_flush();
+                 ?>
+
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
+                <h1 class="h3 mb-0 text-gray-800">Add Manufacturer and Models</h1>
+
+                <?php 
+                if (!empty($errorMessage)){
+                    echo "
+                    <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong>$errorMessage</strong>
+                    <button type='button' class='close' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    ";
+                }
+                ?>
+
+<?php 
+                    if (!empty($successMessage)){
+                        echo "
+                <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <strong>$successMessage</strong>
+                                <button type='button' class='close' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                             </div>
+                         </div>
+                    </div>
+                
+                    ";
+                    }
+                    ?>
                 <br>
 
-                <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
-                
-               
+                    <form method="POST">
+        
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Manufacturer Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="manufacturer" value="<?php echo $manufacturer; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Model Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="model" value="<?php echo $model; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Color</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="color" value="<?php echo $color; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Engine/Transmission</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="engine" value="<?php echo $engine; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">VIN</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="vin" value="<?php echo $vin; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Year Model</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="year_model" value="<?php echo $year_model; ?>">
+                        </div>
+                    </div>
 
+                    
 
-            <div>
-            
-            <br>
-            <br>
-                <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Customer Details</th>
-    <th scope="col">Manufacturer</th>
-      <th scope="col">Model</th>
-      <th scope="col">Color</th>
-      <th scope="col">Engine/Transmission</th>
-      <th scope="col">VIN</th>
-      <th scope="col">Year Model</th>
-      <th scope="col">Price</th>
-      <th scope="col">Date of Sale</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
-
-</div>
-                
+                    <div class="row mb-3">
+                        <div class="offset-sm-3 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class=" col-sm-6">
+                            <a class="btn btn-outline-primary" href="../admin/managemodels.php" role="button">Cancel</a>
+                        </div>
+                    </div>
+                    
+                    </form>
                 </div>
-
-                
-
-                
-
-                
                 <!-- /.container-fluid -->
 
 

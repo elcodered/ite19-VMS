@@ -205,7 +205,7 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">Manage Manufacturers</h1>
+                <h1 class="h3 mb-0 text-gray-800">Manage Manufacturers and Models</h1>
                 <br>
                 
                

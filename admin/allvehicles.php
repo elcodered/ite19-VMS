@@ -226,55 +226,38 @@ include('includes/navbar.php');
                 <table class="table">
   <thead class="table-dark">
     <tr>
-    <th scope="col">Manufacturer Name</th>
-      <th scope="col">Model Name</th>
-      <th scope="col">Category</th>
+    <th scope="col">Manufacturer</th>
+      <th scope="col">Model</th>
+      <th scope="col">Color</th>
+      <th scope="col">Engine/Transmission</th>
+      <th scope="col">Year Model</th>
       <th scope="col">Cost Price</th>
       <th scope="col">Status</th>
       <th scope="col">Added on</th>
-      <th scope="col">Sold on</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     <tr>
       <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>Ertiga</td>
+      <td>Red</td>
+      <td>1.5L - Manual Transmission</td>
+      <td>2022</td>
       <td>P1,000,000</td>
       <td>Available</td>
       <td>01/24/24</td>
-      <td>--</td>
       <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
     <tr>
       <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
+      <td>Ertiga</td>
+      <td>Red</td>
+      <td>1.5L - Manual Transmission</td>
+      <td>2022</td>
       <td>P1,000,000</td>
       <td>Available</td>
       <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
-      <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Suzuki</td>
-      <th>Ertiga</th>
-      <td>Sedan</td>
-      <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td>--</td>
       <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
     </tr>
   </tbody>

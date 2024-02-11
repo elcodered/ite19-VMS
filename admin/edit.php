@@ -292,8 +292,53 @@ include('includes/navbar.php');
                     ?>
                     <br>
 
+                    
+
+
+                    <!------------------------------>
+
+                    <div class="container-fluid">
+
+                <h1 class="h3 mb-0 text-gray-800">Edit Employee Details</h1>
+
+                <?php 
+                if (!empty($errorMessage)){
+                    echo "
+                    <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong>$errorMessage</strong>
+                    <button type='button' class='close' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    ";
+                }
+                ?>
+
+<?php 
+                    if (!empty($successMessage)){
+                        echo "
+                <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <strong>$successMessage</strong>
+                                <button type='button' class='close' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                             </div>
+                         </div>
+                    </div>
+                
+                    ";
+                    }
+                    ?>
+                <br>
+
                     <form method="POST">
-                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <input type="hidden" class="form-control" name="id" value="<?php echo $id; ?>">
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-6">
@@ -338,6 +383,8 @@ include('includes/navbar.php');
                     
                     </form>
                 </div>
+                </div>
+            
                 <!-- /.container-fluid -->
 
 
