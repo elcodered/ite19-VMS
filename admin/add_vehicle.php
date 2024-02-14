@@ -1,7 +1,8 @@
-<?php include('includes/header.php'); 
+<?php 
+
+
+include('includes/header.php'); 
 include('includes/navbar.php');
-
-
 ?>
 
         
@@ -203,77 +204,73 @@ include('includes/navbar.php');
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <?php
 
-                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
-                <br>
+$mysqli = new mysqli('localhost', 'root', 'admin', 'vms');
 
-                <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
-                
-               
+// Check connection
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
 
+// Fetch unique manufacturers from the database
+$manufacturerQuery = "SELECT DISTINCT manufacturer FROM models";
+$manufacturers = $mysqli->query($manufacturerQuery);
 
-            <div>
-            
-            <br>
-            <br>
-                <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Customer Details</th>
-    <th scope="col">Manufacturer</th>
-      <th scope="col">Model</th>
-      <th scope="col">Color</th>
-      <th scope="col">Engine/Transmission</th>
-      <th scope="col">VIN</th>
-      <th scope="col">Year Model</th>
-      <th scope="col">Sale Price</th>
-      <th scope="col">Date of Sale</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+?>
 
+<!-- Your HTML form to collect information about the vehicle -->
+<div class="container">
+    <h1 class="h3 mb-0 text-gray-800">Add New Vehicle</h1>
+    <br>
+
+    <form id="addVehicleForm" action="available_vehicle.php" method="POST">
+        <div class="form-group">
+            <label for="manufacturer">Manufacturer</label>
+            <select class="form-control" id="manufacturer" name="manufacturer" required>
+                <?php
+                while ($row = $manufacturers->fetch_assoc()) {
+                    echo "<option value='{$row['manufacturer']}'>{$row['manufacturer']}</option>";
+                }
+                ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="model">Model</label>
+            <select class="form-control" id="model" name="model" required>
+                <!-- Options will be dynamically populated using AJAX -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="color">Color</label>
+            <input type="text" class="form-control" id="color" name="color" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="engine">Engine/Transmission</label>
+            <input type="text" class="form-control" id="engine" name="engine" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="vin">VIN</label>
+            <input type="text" class="form-control" id="vin" name="vin" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="yearModel">Year Model</label>
+            <input type="text" class="form-control" id="yearModel" name="yearModel" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="costPrice">Cost Price</label>
+            <input type="text" class="form-control" id="costPrice" name="costPrice" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
 </div>
-                
-                </div>
-
-                
-
-                
-
-                
                 <!-- /.container-fluid -->
 
 
@@ -287,8 +284,62 @@ include('includes/navbar.php');
     <?php include('includes/scripts.php');
     include('includes/footer.php'); ?>
 
+    <!-- ... (your existing HTML code) ... -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"></script>
+    
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    
+    <script>
+        // jQuery function to handle AJAX for dynamically populating model dropdown
+        $(document).ready(function () {
+        $('#manufacturer').change(function () {
+            var manufacturer = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: 'get_models.php',
+                data: { manufacturer: manufacturer },
+                success: function (response) {
+                    $('#model').html(response);
+                    // Call updateVehicleDetails after updating the model dropdown
+                    updateVehicleDetails();
+                }
+            });
+        });
+    
+        $('#model').change(function () {
+            // Call updateVehicleDetails when the model dropdown changes
+            updateVehicleDetails();
+        });
+    
+        function updateVehicleDetails() {
+            var manufacturer = $('#manufacturer').val();
+            var model = $('#model').val();
+    
+            $.ajax({
+                type: 'POST',
+                url: 'get_vehicle_details.php',
+                data: { manufacturer: manufacturer, model: model },
+                dataType: 'json',
+                success: function (response) {
+                    $('#color').val(response.color);
+                    $('#engine').val(response.engine);
+                    $('#vin').val(response.vin);
+                    $('#yearModel').val(response.yearModel);
+                }
+            });
+        }
+    });
+    </script>
+
 
 
 </body>
 
 </html>
+

@@ -366,7 +366,7 @@ include('includes/navbar.php');
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Address</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="address" value="<?php echo $address; ?>">
+                            <input type="text" class="form-control" name="address" value="<?php echo $address; ?>" readonly>
                         </div>
                     </div>
 

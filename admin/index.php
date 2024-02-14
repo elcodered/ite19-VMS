@@ -221,7 +221,7 @@ include('includes/navbar.php');
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Vehicles</div>
+                                                Total Available Vehicles</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                         </div>
                                         <div class="col-auto">
@@ -256,7 +256,7 @@ include('includes/navbar.php');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Customers
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Customers Vehicle Sold
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">

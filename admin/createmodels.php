@@ -243,7 +243,8 @@ ob_start();
                     } 
 
                     $sql = "INSERT INTO models (manufacturer, model, description, color, engine, vin, year_model)" . 
-                           "VALUES ('$manufacturer', '$model', '$description', '$color', '$engine', '$vin', '$year_model')";
+                            "VALUES ('$manufacturer', '$model', '$description', '$color', '$engine', '$vin', '$year_model')";
+
                            $result = $connection->query($sql);
 
                            if(!$result){
@@ -325,12 +326,7 @@ ob_start();
                             <input type="text" class="form-control" name="model" value="<?php echo $model; ?>">
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-3 col-form-label">Description</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
-                        </div>
-                    </div>
+                    
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Color</label>
                         <div class="col-sm-6">
@@ -353,6 +349,18 @@ ob_start();
                         <label class="col-sm-3 col-form-label">Year Model</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" name="year_model" value="<?php echo $year_model; ?>">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-6">
+                             <textarea class="form-control" name="description" rows="7"><?php echo $description; ?></textarea>
+                             </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <input type="hidden" class="form-control" name="status" value="<?php echo $status; ?>">
                         </div>
                     </div>
 

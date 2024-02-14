@@ -205,67 +205,89 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">All Vehicles</h1>
+                
+
+                <h1 class="h3 mb-0 text-gray-800">All Available Vehicles</h1>
                 <br>
                 
-               
+                <a class="btn btn-success" href="../admin/add_vehicle.php" role="button">Add New Vehicles</a>
+                <br>   <br>
 
-
-            <div>
-            
-            <button type="button" class="btn btn-success">Add New Vehicle</button>
-            <br>
-            <br>
-
-            <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
                 <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Manufacturer</th>
-      <th scope="col">Model</th>
-      <th scope="col">Color</th>
-      <th scope="col">Engine/Transmission</th>
-      <th scope="col">Year Model</th>
-      <th scope="col">Cost Price</th>
-      <th scope="col">Status</th>
-      <th scope="col">Added on</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>2022</td>
-      <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>2022</td>
-      <td>P1,000,000</td>
-      <td>Available</td>
-      <td>01/24/24</td>
-      <td><button type="submit" class="btn btn-info">Sell</button><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+                    <thead>
+                        <tr>
 
-</div>
+                            <th>Manufacturer</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Engine/Transmission</th>
+                            <th>VIN</th>
+                            <th>Year Model</th>
+                            <th>Cost Price</th>
+                            <th>Date Added</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+$sql = "SELECT v_id, manufacturer, model, color, engine, vin, yearModel, cost, DATE_FORMAT(date_added, '%m/%d/%Y') as formatted_date, status FROM vehicle";
+$result = $connection->query($sql);
+
+if (!$result) {
+    die("Invalid query" . $connection->error);
+}
+
+while ($row = $result->fetch_assoc()) {
+    echo "
+    <tr>
+        <td>{$row['manufacturer']}</td>
+        <td>{$row['model']}</td>
+        <td>{$row['color']}</td>
+        <td>{$row['engine']}</td>
+        <td>{$row['vin']}</td>
+        <td>{$row['yearModel']}</td>
+        <td>{$row['cost']}</td>
+        <td>{$row['formatted_date']}</td>
+        <td>{$row['status']}</td>
+        <td>
+            <a class='btn btn-info btn-sm' href='../admin/sellvehicles.php?v_id={$row['v_id']}'>Sell</a>
+            <a class='btn btn-danger btn-sm' href='../delete.php?v_id={$row['v_id']}'>Delete</a>
+        </td>
+    </tr>
+    ";
+}
+
+$connection->close();
+?>
+
+                        
+                    </tbody>
+
+                </table>
+
+
+
                 
                 </div>
+
+                
+
+                
+
+                
+                <!-- /.container-fluid -->
 
                 
 

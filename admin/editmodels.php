@@ -377,9 +377,9 @@ include('includes/navbar.php');
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Description</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="description" value="<?php echo $description; ?>">
-                        </div>
+                            <div class="col-sm-6">
+                             <textarea class="form-control" name="description" rows="7"><?php echo $description; ?></textarea>
+                             </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Year Model</label>
@@ -395,7 +395,7 @@ include('includes/navbar.php');
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                         <div class=" col-sm-6">
-                            <a class="btn btn-outline-primary" href="../admin/managemodels.php" role="button">Cancel</a>
+                            <a class="btn btn-outline-primary" href="../managemodels.php" role="button">Cancel</a>
                         </div>
                     </div>
                     

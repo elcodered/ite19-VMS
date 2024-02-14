@@ -1,7 +1,8 @@
-<?php include('includes/header.php'); 
+<?php 
+
+
+include('includes/header.php'); 
 include('includes/navbar.php');
-
-
 ?>
 
         
@@ -199,87 +200,241 @@ include('includes/navbar.php');
 
                     </ul>
 
-                </nav>
-                <!-- End of Topbar -->
+                 </nav>
+                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                 <!-- Begin Page Content -->
+                  <?php
 
-                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "admin";
+                 $database = "vms";
+
+                    $connection = new mysqli($servername, $username, $password, $database);
+
+                 $v_id = "";
+                 $manufacturer = "";
+                 $model = "";
+                 $color = "";
+                 $engine = "";
+                 $vin = "";
+                 $yearModel = "";
+                 $cost = "";
+
+                 $errorMessage = "";
+                 $successMessage = "";
+
+                  if($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+                
+
+                     if(!isset($_GET['v_id'])){
+                        echo "<script> window.location.href='allvehicles.php';</script>";
+                      exit;
+
+                 }
+                 $v_id = $_GET["v_id"];
+                    
+
+                    $sql = "SELECT * FROM vehicle WHERE v_id=$v_id";
+                    $result = $connection->query($sql);
+                    $row = $result->fetch_assoc();
+
+                 if (!$row){
+                     echo "<script> window.location.href='allvehicles.php';</script>";
+                     exit;
+                    }
+
+                    $manufacturer = $row["manufacturer"];
+                    $model = $row["model"];
+                    $color = $row["color"];
+                    $engine = $row["engine"];
+                    $vin = $row["vin"];
+                    $yearModel = $row["yearModel"];
+                    $cost = $row["cost"];
+
+                    }
+                    else {
+                        $v_id = $_POST['v_id'];
+
+                        $manufacturer = $_POST["manufacturer"];
+                        $model = $_POST["model"];
+                        $color = $_POST["color"];
+                        $engine = $_POST["engine"];
+                        $vin = $row["vin"];
+                        $yearModel = $_POST["yearModel"];
+                        $cost = $_POST["cost"];
+
+                    do{
+
+                    if(empty($v_id) || empty($manufacturer) || empty($model) || empty($color) || empty($engine) || empty($vin) || empty($yearModel) || empty($cost)){
+                        $errorMessage = "All the fields are required";
+                        break;
+                    }
+
+                    $sql = "UPDATE `vehicle` " .
+                            "SET `manufacturer` = '$manufacturer', `model` = '$model', `color` = '$color', `engine` = '$engine' , `vin` = '$vin', `yearModel` = '$yearModel', `cost` = '$cost' " .
+                            "WHERE `v_id` = $v_id";
+
+                        $result = $connection->query($sql);
+
+                        if(!$result){
+                            $errorMessage = "Invalid query: " . $connection->error;
+                            break;
+                           }
+
+                           $successMessage = "Vehicle Sold successfully!";
+
+                           echo "<script> window.location.href='allvehicles.php';</script>";
+                    exit;
+
+
+                    
+                    }while (false);
+
+                }
+
+                    ?>
+                    <br>
+
+                    
+
+
+                    <!------------------------------>
+
+                    <div class="container-fluid">
+
+                <h1 class="h3 mb-0 text-gray-800">Add Customer Information to Sell Vehicle</h1>
+
+                <?php 
+                if (!empty($errorMessage)){
+                    echo "
+                    <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                    <strong>$errorMessage</strong>
+                    <button type='button' class='close' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>
+                    </div>
+                    </div>
+                    ";
+                }
+                ?>
+
+<?php 
+                    if (!empty($successMessage)){
+                        echo "
+                <div class='row mb-3'>
+                    <div class='offset-sm-3 col-sm-6'>
+                        <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <strong>$successMessage</strong>
+                                <button type='button' class='close' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                             </div>
+                         </div>
+                    </div>
+                
+                    ";
+                    }
+                    ?>
                 <br>
 
-                <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
-                
-               
+                    <form method="POST">
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Address</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Contact No.</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="name">
+                        </div>
+                    </div>
+                    <br><br>
+                    <input type="hidden" class="form-control" name="v_id" value="<?php echo $v_id; ?>"readonly>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Manufacturer</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="manufacturer" value="<?php echo $manufacturer; ?> "readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Model</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="model" value="<?php echo $model; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Color</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="color" value="<?php echo $color; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Engine</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="engine" value="<?php echo $engine; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">VIN</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="vin" value="<?php echo $vin; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Year Model</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="yearModel" value="<?php echo $yearModel; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-3 col-form-label">Cost</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="cost" value="<?php echo $cost; ?>" readonly>
+                        </div>
+                    </div>
 
+                    
 
-            <div>
-            
-            <br>
-            <br>
-                <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Customer Details</th>
-    <th scope="col">Manufacturer</th>
-      <th scope="col">Model</th>
-      <th scope="col">Color</th>
-      <th scope="col">Engine/Transmission</th>
-      <th scope="col">VIN</th>
-      <th scope="col">Year Model</th>
-      <th scope="col">Sale Price</th>
-      <th scope="col">Date of Sale</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
-
-</div>
-                
+                    <div class="row mb-3">
+                        <div class="offset-sm-3 d-grid">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        <div class=" col-sm-6">
+                            <a class="btn btn-outline-primary" href="../admin/allvehicles.php" role="button">Cancel</a>
+                        </div>
+                    </div>
+                    
+                    </form>
                 </div>
-
-                
-
-                
-
-                
+                </div>
+            
                 <!-- /.container-fluid -->
 
 
             
 
-    </div>
+            </div>
+        </div>
     <!-- End of Page Wrapper -->
 
   
