@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssssdss", $manufacturer, $model, $color, $engine, $vin, $yearModel, $costPrice, $status);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Customer Successfully Added!');</script>";
+        echo "<script>alert('Vehicle Successfully Added!');</script>";
         echo "<script> window.location.href='allvehicles.php';</script>";
                     exit;
     } else {

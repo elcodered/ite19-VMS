@@ -205,10 +205,21 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+               
+
                 
 
                 <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
                 <br>   <br>
+
+                <nav class="navbar navbar-light bg-light">
+                <form class="d-flex w-50">
+    <input id="search" class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+</nav>
+
 
                 <table class="table">
                     <thead>
@@ -276,6 +287,8 @@ $connection->close();
 
                 </table>
 
+                
+
 
 
                 
@@ -305,6 +318,7 @@ $connection->close();
 
     <?php include('includes/scripts.php');
     include('includes/footer.php'); ?>
+
 
 
 

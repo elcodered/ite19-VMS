@@ -397,11 +397,148 @@ $connection->close();
 </div>
 </div>
 
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to get the sold vehicle count by manufacturer
+$countQuery = "SELECT manufacturer, COUNT(*) as soldCount FROM customer_sales GROUP BY manufacturer ORDER BY soldCount DESC LIMIT 5";
+
+$countResult = $connection->query($countQuery);
+
+if (!$countResult) {
+    die("Invalid count query" . $connection->error);
+}
+
+// Create an associative array to store manufacturer-wise sold vehicle count
+$manufacturerCounts = array();
+
+while ($countRow = $countResult->fetch_assoc()) {
+    $manufacturer = $countRow['manufacturer'];
+    $soldCount = $countRow['soldCount'];
+    $manufacturerCounts[$manufacturer] = $soldCount;
+}
+
+
+$connection->close();
+?>
+
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to get the total cost of vehicles sold by each manufacturer
+$totalCostQuery = "SELECT manufacturer, SUM(cost) as totalCost FROM customer_sales GROUP BY manufacturer ORDER BY totalCost DESC";
+
+$totalCostResult = $connection->query($totalCostQuery);
+
+if (!$totalCostResult) {
+    die("Invalid total cost query" . $connection->error);
+}
+
+// Create an associative array to store manufacturer-wise total cost
+$manufacturerTotalCost = array();
+
+while ($totalCostRow = $totalCostResult->fetch_assoc()) {
+    $manufacturer = $totalCostRow['manufacturer'];
+    $totalCost = $totalCostRow['totalCost'];
+    $manufacturerTotalCost[$manufacturer] = $totalCost;
+}
+
+$connection->close();
+?>
+
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Display TOP 5 Sold Vehicle by Manufacturer -->
+        <div class="col-md-6 mb-4">
+            <h2 class="text-center mb-4"><b>TOP 5 Sold Vehicle by Manufacturer</b></h2>
+            <table class="table border" style="border: 2px solid #000000; padding: 10px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Manufacturer</th>
+                        <th>Sold Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($manufacturerCounts as $manufacturer => $soldCount) {
+                        echo "
+                        <tr>
+                            <td>{$manufacturer}</td>
+                            <td>{$soldCount}</td>
+                        </tr>
+                        ";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Display TOP Manufacturers by Sales Cost -->
+        <div class="col-md-6 mb-4">
+            <h2 class="text-center mb-4"><b>TOP 5 Manufacturers by Vehicle Sales Cost</b></h2>
+            <table class="table border" style="border: 2px solid #000000; padding: 10px; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Manufacturer</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($manufacturerTotalCost as $manufacturer => $totalCost) {
+                        echo "
+                        <tr>
+                            <td>{$manufacturer}</td>
+                            <td>₱" . number_format($totalCost) . "</td>
+                        </tr>
+                        ";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <!-- Content Row -->
 
                 </div>
                 <!-- /.container-fluid -->
+
+                
 
 
             
