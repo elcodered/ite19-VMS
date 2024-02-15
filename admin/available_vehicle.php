@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssssdss", $manufacturer, $model, $color, $engine, $vin, $yearModel, $costPrice, $status);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Vehicle Successfully Added!');</script>";
+        echo "<script>alert('Customer Successfully Added!');</script>";
         echo "<script> window.location.href='allvehicles.php';</script>";
                     exit;
     } else {
@@ -37,6 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 }
 $mysqli->close();
+
+?>
+
+<?php
 
 include('includes/footer.php');
 ?>

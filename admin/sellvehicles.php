@@ -214,6 +214,10 @@ include('includes/navbar.php');
                     $connection = new mysqli($servername, $username, $password, $database);
 
                  $v_id = "";
+                 $name = "";
+                 $email = "";
+                 $address = "";
+                 $contact_no = "";
                  $manufacturer = "";
                  $model = "";
                  $color = "";
@@ -343,7 +347,7 @@ include('includes/navbar.php');
                     ?>
                 <br>
 
-                    <form method="POST">
+                    <form action="sell.php" method="POST">
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-6">
@@ -353,19 +357,19 @@ include('includes/navbar.php');
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control" name="email">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Address</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control" name="address">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label">Contact No.</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control" name="contact_no">
                         </div>
                     </div>
                     <br><br>

@@ -250,15 +250,21 @@ if (!$result) {
 }
 
 while ($row = $result->fetch_assoc()) {
+    // Remove commas and convert to float
+    $costFloat = (float) str_replace(',', '', $row['cost']);
+
+    // Format the cost with commas
+    $formattedCost = number_format($costFloat);
+
     echo "
     <tr>
-        <td>{$row['manufacturer']}</td>
+        <td>{$row['manufacturer']} <br>{$row['manufacturer']}<br></td>
         <td>{$row['model']}</td>
         <td>{$row['color']}</td>
         <td>{$row['engine']}</td>
         <td>{$row['vin']}</td>
         <td>{$row['yearModel']}</td>
-        <td>{$row['cost']}</td>
+        <td>{$formattedCost}</td> <!-- Display the formatted cost -->
         <td>{$row['formatted_date']}</td>
         <td>{$row['status']}</td>
         <td>

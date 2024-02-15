@@ -272,24 +272,51 @@ include('includes/navbar.php');
                             </div>
                         </div>
 
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Total Earnings</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">₱500,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to calculate the total earnings
+$sqlTotalEarnings = "SELECT SUM(cost) as total_earnings FROM customer_sales";
+$resultTotalEarnings = $connection->query($sqlTotalEarnings);
+
+if ($resultTotalEarnings) {
+    $rowTotalEarnings = $resultTotalEarnings->fetch_assoc();
+    $totalEarnings = $rowTotalEarnings['total_earnings'];
+} else {
+    $totalEarnings = 0; // Default value if there's an error in the query
+}
+
+$connection->close();
+?>
+
+<!-- Total Earnings Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                        Total Earnings</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">₱<?php echo number_format($totalEarnings); ?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 
                     <!-- Content Row -->
 

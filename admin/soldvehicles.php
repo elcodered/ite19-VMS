@@ -205,69 +205,88 @@ include('includes/navbar.php');
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
-                <br>
-
-                <nav class="navbar navbar-light bg-light">
-  <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </form>
-</nav>
                 
-               
 
+                <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
+                <br>   <br>
 
-            <div>
-            
-            <br>
-            <br>
                 <table class="table">
-  <thead class="table-dark">
-    <tr>
-    <th scope="col">Customer Details</th>
-    <th scope="col">Manufacturer</th>
-      <th scope="col">Model</th>
-      <th scope="col">Color</th>
-      <th scope="col">Engine/Transmission</th>
-      <th scope="col">VIN</th>
-      <th scope="col">Year Model</th>
-      <th scope="col">Sale Price</th>
-      <th scope="col">Date of Sale</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-    <td><b>Name:</b> John Lawrence Cambalon<br><b>Email:</b> lawrencecambalon@gmail.com<br> <b>Address:</b> Pagatpatan, Butuan City</td>
-      <td>Suzuki</td>
-      <td>Ertiga</td>
-      <td>Red</td>
-      <td>1.5L - Manual Transmission</td>
-      <td>1M8GDM9A_KP042788</td>
-      <td>2021</td>
-      <td>P1,000,000</td>
-      <td>01/27/24</td>
-      <td><button type="submit" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </tbody>
-</table>
+                    <thead>
+                        <tr>
 
-</div>
+                            <th>Customers Information</th>
+                            <th>Manufacturer</th>
+                            <th>Model</th>
+                            <th>Color</th>
+                            <th>Engine</th>
+                            <th>VIN</th>
+                            <th>Year Model</th>
+                            <th>Sale Price</th>
+                            <th>Date Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+$sql = "SELECT c_id, name, email, address, contact_no, manufacturer, model, color, engine, vin, yearModel, cost, DATE_FORMAT(dateSold, '%m/%d/%Y') as formatted_date FROM customer_sales";
+$result = $connection->query($sql);
+
+if (!$result) {
+    die("Invalid query" . $connection->error);
+}
+
+while ($row = $result->fetch_assoc()) {
+    // Remove commas and convert to float
+    $costFloat = (float) str_replace(',', '', $row['cost']);
+
+    // Format the cost with commas
+    $formattedCost = number_format($costFloat);
+
+    echo "
+    <tr>
+        <td><b>Name:</b> {$row['name']}<br> <b>Email:</b> {$row['email']}<br> <b>Address:</b> {$row['address']} <br> <b>Contact No.:</b> {$row['contact_no']}</td>
+        <td>{$row['manufacturer']}</td>
+        <td>{$row['model']}</td>
+        <td>{$row['color']}</td>
+        <td>{$row['engine']}</td>
+        <td>{$row['vin']}</td>
+        <td>{$row['yearModel']}</td>
+        <td>{$formattedCost}</td> <!-- Display the formatted cost -->
+        <td>{$row['formatted_date']}</td>
+        <td>
+    </tr>
+    ";
+}
+
+$connection->close();
+?>
+
+                        
+                    </tbody>
+
+                </table>
+
+
+
                 
                 </div>
+
+                
+
+                
+
+                
+                <!-- /.container-fluid -->
 
                 
 
