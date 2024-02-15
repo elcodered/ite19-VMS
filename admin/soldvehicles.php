@@ -261,7 +261,7 @@ while ($row = $result->fetch_assoc()) {
         <td>{$row['engine']}</td>
         <td>{$row['vin']}</td>
         <td>{$row['yearModel']}</td>
-        <td>{$formattedCost}</td> <!-- Display the formatted cost -->
+        <td>₱{$formattedCost}</td> <!-- Display the formatted cost -->
         <td>{$row['formatted_date']}</td>
         <td>
     </tr>

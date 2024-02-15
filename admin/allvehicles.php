@@ -258,13 +258,13 @@ while ($row = $result->fetch_assoc()) {
 
     echo "
     <tr>
-        <td>{$row['manufacturer']} <br>{$row['manufacturer']}<br></td>
+        <td>{$row['manufacturer']}</td>
         <td>{$row['model']}</td>
         <td>{$row['color']}</td>
         <td>{$row['engine']}</td>
         <td>{$row['vin']}</td>
         <td>{$row['yearModel']}</td>
-        <td>{$formattedCost}</td> <!-- Display the formatted cost -->
+        <td>₱{$formattedCost}</td> <!-- Display the formatted cost -->
         <td>{$row['formatted_date']}</td>
         <td>{$row['status']}</td>
         <td>

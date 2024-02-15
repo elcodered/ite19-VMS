@@ -214,63 +214,143 @@ include('includes/navbar.php');
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Available Vehicles</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-solid fa-car fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms"; // Replace with your actual database name
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Employees</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+$connection = new mysqli($servername, $username, $password, $database);
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Customers Vehicle Sold
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">3</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to calculate the total number of available vehicles
+$sqlTotalVehicles = "SELECT COUNT(*) as total_vehicles FROM vehicle";
+$resultTotalVehicles = $connection->query($sqlTotalVehicles);
+
+if ($resultTotalVehicles) {
+    $rowTotalVehicles = $resultTotalVehicles->fetch_assoc();
+    $totalVehicles = $rowTotalVehicles['total_vehicles'];
+} else {
+    $totalVehicles = 0; // Default value if there's an error in the query
+}
+
+$connection->close();
+?>
+
+<!-- Total Available Vehicles Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Total Available Vehicles</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalVehicles; ?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-car fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        <?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms"; // Replace with your actual database name
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to calculate the total number of employees
+$sqlTotalEmployees = "SELECT COUNT(*) as total_employees FROM employee"; // Replace with your actual employee table name
+$resultTotalEmployees = $connection->query($sqlTotalEmployees);
+
+if ($resultTotalEmployees) {
+    $rowTotalEmployees = $resultTotalEmployees->fetch_assoc();
+    $totalEmployees = $rowTotalEmployees['total_employees'];
+} else {
+    $totalEmployees = 0; // Default value if there's an error in the query
+}
+
+$connection->close();
+?>
+
+<!-- Total Employees Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Employees</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $totalEmployees; ?></div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-user fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms"; // Replace with your actual database name
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+// Query to calculate the total number of vehicles sold
+$sqlTotalSoldVehicles = "SELECT COUNT(*) as total_sold_vehicles FROM customer_sales"; // Replace with your actual customer sales table name
+$resultTotalSoldVehicles = $connection->query($sqlTotalSoldVehicles);
+
+if ($resultTotalSoldVehicles) {
+    $rowTotalSoldVehicles = $resultTotalSoldVehicles->fetch_assoc();
+    $totalSoldVehicles = $rowTotalSoldVehicles['total_sold_vehicles'];
+} else {
+    $totalSoldVehicles = 0; // Default value if there's an error in the query
+}
+
+$connection->close();
+?>
+
+<!-- Total Customers Vehicle Sold Card Example -->
+<div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                        Total Customers Vehicle Sold
+                    </div>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $totalSoldVehicles; ?></div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <i class="fas fa-users fa-2x text-gray-300"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
                         <?php
 $servername = "localhost";
