@@ -212,16 +212,16 @@ include('includes/navbar.php');
                 <h1 class="h3 mb-0 text-gray-800">All Sold Vehicles</h1>
                 <br>   <br>
 
-                <nav class="navbar navbar-light bg-light">
-                <form class="d-flex w-50">
-    <input id="search" class="form-control mr-sm-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
+                <!-- Modify the form to include the search term in the action attribute -->
+<form class="d-flex w-50" method="GET">
+    <input id="search" class="form-control mr-sm-2 flex-grow-1" type="text" placeholder="Search" aria-label="Search" name="search" value="<?php if(isset($_GET['search'])) {echo $_GET['search'];}  ?>"required>
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
+<br><br>
 
-</nav>
 
 
-                <table class="table">
+                <table class="table original-table">
                     <thead>
                         <tr>
 
@@ -263,24 +263,158 @@ while ($row = $result->fetch_assoc()) {
     // Format the cost with commas
     $formattedCost = number_format($costFloat);
 
-    echo "
-    <tr>
-        <td><b>Name:</b> {$row['name']}<br> <b>Email:</b> {$row['email']}<br> <b>Address:</b> {$row['address']} <br> <b>Contact No.:</b> {$row['contact_no']}</td>
-        <td>{$row['manufacturer']}</td>
-        <td>{$row['model']}</td>
-        <td>{$row['color']}</td>
-        <td>{$row['engine']}</td>
-        <td>{$row['vin']}</td>
+ echo "
+   <tr>
+    <td><b>Name:</b> {$row['name']}<br> <b>Email:</b> {$row['email']}<br> <b>Address:</b> {$row['address']} <br> <b>Contact No.:</b> {$row['contact_no']}</td>
+    <td>{$row['manufacturer']}</td>
+    <td>{$row['model']}</td>
+    <td>{$row['color']}</td>
+    <td>{$row['engine']}</td>
+    <td>{$row['vin']}</td>
         <td>{$row['yearModel']}</td>
-        <td>₱{$formattedCost}</td> <!-- Display the formatted cost -->
-        <td>{$row['formatted_date']}</td>
+       <td>₱{$formattedCost}</td> <!-- Display the formatted cost -->
+       <td>{$row['formatted_date']}</td>
         <td>
     </tr>
     ";
 }
 
+
+
 $connection->close();
 ?>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "admin";
+$database = "vms";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Connection Failed!" . $connection->connect_error);
+}
+
+if(isset($_GET['search'])){
+    $filtervalues = $_GET['search'];
+    $query = "SELECT c_id, name, email, address, contact_no, manufacturer, model, color, engine, vin, yearModel, cost, DATE_FORMAT(dateSold, '%m/%d/%Y') as formatted_date FROM customer_sales WHERE CONCAT(name, email, address, manufacturer, model, color, engine, vin, yearModel, cost, dateSold) LIKE '%$filtervalues%'";
+    $query_run = mysqli_query($connection, $query);
+
+    // Hide the existing table if search results are displayed
+    $hideTable = mysqli_num_rows($query_run) > 0;
+
+    if($hideTable) {
+        echo '<style>.original-table { display: none; }</style>';
+    }
+    ?>
+    <div class="container-fluid">
+        <h1 class="h3 mb-0 text-gray-800">Search Results</h1>
+        <br> <br>
+
+        <!-- Existing table with class for styling -->
+        <table class="table original-table">
+            <thead>
+                <tr>
+                    <th>Customers Information</th>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Color</th>
+                    <th>Engine</th>
+                    <th>VIN</th>
+                    <th>Year Model</th>
+                    <th>Sale Price</th>
+                    <th>Date Sold</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach($query_run as $items){
+                    // Remove commas and convert to float
+                    $costFloat = (float) str_replace(',', '', $items['cost']);
+
+                    // Format the cost with commas
+                    $formattedCost = number_format($costFloat);
+
+                    ?>
+                    <tr>
+                        <td><b>Name: </b><?= $items['name']; ?> <br> Email: </b><?= $items['email']; ?> <br> Address: </b><?= $items['address']; ?></td>
+                        <td><?= $items['manufacturer']; ?></td>
+                        <td><?= $items['model']; ?></td>
+                        <td><?= $items['color']; ?></td>
+                        <td><?= $items['engine']; ?></td>
+                        <td><?= $items['vin']; ?></td>
+                        <td><?= $items['yearModel']; ?></td>
+                        <td>₱<?= $formattedCost; ?></td>
+                        <td><?= $items['formatted_date']; ?></td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </tbody>
+        </table>
+
+        <!-- Search results table -->
+        <?php
+        if(mysqli_num_rows($query_run) > 0){
+            ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Customers Information</th>
+                        <th>Manufacturer</th>
+                        <th>Model</th>
+                        <th>Color</th>
+                        <th>Engine</th>
+                        <th>VIN</th>
+                        <th>Year Model</th>
+                        <th>Sale Price</th>
+                        <th>Date Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach($query_run as $items){
+                        // Remove commas and convert to float
+                        $costFloat = (float) str_replace(',', '', $items['cost']);
+
+                        // Format the cost with commas
+                        $formattedCost = number_format($costFloat);
+
+                        ?>
+                        <tr>
+                            <td><b>Name: </b><?= $items['name']; ?> <br> <b>Email: </b><?= $items['email']; ?> <br> <b>Address: </b><?= $items['address']; ?></td>
+                            <td><?= $items['manufacturer']; ?></td>
+                            <td><?= $items['model']; ?></td>
+                            <td><?= $items['color']; ?></td>
+                            <td><?= $items['engine']; ?></td>
+                            <td><?= $items['vin']; ?></td>
+                            <td><?= $items['yearModel']; ?></td>
+                            <td>₱<?= $formattedCost; ?></td>
+                            <td><?= $items['formatted_date']; ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+        } else {
+            ?>
+            <p>No Record Found</p>
+            <?php
+        }
+        ?>
+    </div>
+    <?php
+}
+
+$connection->close();
+?>
+
+
+
+
 
                         
                     </tbody>
@@ -306,12 +440,12 @@ $connection->close();
                 
 
                 
-                <!-- /.container-fluid -->
-
+</div>
 
             
 
     </div>
+</div>
     <!-- End of Page Wrapper -->
 
   

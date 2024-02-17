@@ -411,7 +411,7 @@ if ($connection->connect_error) {
 }
 
 // Query to get the sold vehicle count by manufacturer
-$countQuery = "SELECT manufacturer, COUNT(*) as soldCount FROM customer_sales GROUP BY manufacturer ORDER BY soldCount DESC LIMIT 5";
+$countQuery = "SELECT manufacturer, COUNT(*) as soldCount FROM customer_sales GROUP BY manufacturer ORDER BY soldCount DESC";
 
 $countResult = $connection->query($countQuery);
 

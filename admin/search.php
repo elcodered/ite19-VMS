@@ -11,33 +11,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_POST['query'])) {
-    $searchText = $_POST['query'];
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-    $sql = "SELECT * FROM customer_sales WHERE name LIKE '%$searchText%'";
-    $result = $conn->query($sql);
+// Modify the SQL query to include the search term
+$sql = "SELECT c_id, name, email, address, contact_no, manufacturer, model, color, engine, vin, yearModel, cost, DATE_FORMAT(dateSold, '%m/%d/%Y') as formatted_date FROM customer_sales";
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "
-    <tr>
-        <td><b>Name:</b> {$row['name']}<br> <b>Email:</b> {$row['email']}<br> <b>Address:</b> {$row['address']} <br> <b>Contact No.:</b> {$row['contact_no']}</td>
-        <td>{$row['manufacturer']}</td>
-        <td>{$row['model']}</td>
-        <td>{$row['color']}</td>
-        <td>{$row['engine']}</td>
-        <td>{$row['vin']}</td>
-        <td>{$row['yearModel']}</td>
-        <td>₱{$formattedCost}</td> <!-- Display the formatted cost -->
-        <td>{$row['formatted_date']}</td>
-        <td>
-    </tr>
-    ";
-        }
-    } else {
-        echo "<p>No results found</p>";
-    }
+// Add the WHERE clause for searching
+if (!empty($searchTerm)) {
+    $sql .= " WHERE name LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%' OR address LIKE '%$searchTerm%' OR contact_no LIKE '%$searchTerm%' OR manufacturer LIKE '%$searchTerm%' OR model LIKE '%$searchTerm%' OR color LIKE '%$searchTerm%' OR engine LIKE '%$searchTerm%' OR vin LIKE '%$searchTerm%' OR yearModel LIKE '%$searchTerm%' OR cost LIKE '%$searchTerm%' OR dateSold LIKE '%$searchTerm%'";
 }
+
+$result = $conn->query($sql);
 
 $conn->close();
 ?>
